@@ -43,7 +43,7 @@ public class CriaLivroServlet extends HttpServlet {
         LivroJpaController dao = new LivroJpaController(ut, emf);
         try {
             dao.create(livro1);
-            response.sendRedirect("criar.html");
+            response.sendRedirect("listar.html");
         } catch (Exception ex) {
             Logger.getLogger(CriaLivroServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
