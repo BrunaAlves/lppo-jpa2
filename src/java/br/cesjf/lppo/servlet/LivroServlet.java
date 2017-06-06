@@ -123,7 +123,7 @@ public class LivroServlet extends HttpServlet {
             dao.create(livro1);
             response.sendRedirect("listar.html");
         } catch (Exception ex) {
-            Logger.getLogger(CriaLivroServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LivroServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
