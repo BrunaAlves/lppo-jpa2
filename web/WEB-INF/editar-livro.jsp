@@ -12,6 +12,7 @@
         <title>Editar Livro</title>
     </head>
     <body>
+        <%@include file="jspf/menu.jspf"%>
         <h1>Editar Livro</h1>
         <form method="post">
             <label>Id: <input name="id" type="hidden" value="${livro.id}" />${livro.id}</label>

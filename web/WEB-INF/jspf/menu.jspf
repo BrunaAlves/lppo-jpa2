@@ -1,0 +1,10 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<nav>
+<h1>Biblioteca</h1>
+<ul>
+    <li><a href="listar.html">Listar</a>
+    <li><a href="criar.html">Criar</a>
+    
+</ul>
+</nav>

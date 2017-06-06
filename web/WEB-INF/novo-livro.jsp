@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="jspf/menu.jspf"%>
         <h1>Novo Livro</h1>
         <form method="post">
             <label>Título: <input name="titulo" /></label>

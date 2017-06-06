@@ -1,18 +1,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- 
-    Document   : listar-livros
-    Created on : 02/06/2017, 22:10:31
-    Author     : alunoces
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="jspf/menu.jspf"%>
         <h1>Listar Livros</h1>
         <table>
             <tr>
@@ -28,7 +23,7 @@
                 <td>${livro.titulo}</td>
                 <td>${livro.autor}</td>
                 <td>${livro.ano}</td>
-                <td><a href="excluir.html?id=${livro.id}">&#128465</a></td>
+                <td><a href="excluir.html?id=${livro.id}">&#128465;</a></td>
             </tr>
             </c:forEach>
         </table>
