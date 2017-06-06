@@ -2,8 +2,13 @@ package br.cesjf.lppo.servlet;
 
 import br.cesjf.Livro;
 import br.cesjf.lppo.dao.LivroJpaController;
+import br.cesjf.lppo.dao.exceptions.RollbackFailureException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -14,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 
-@WebServlet(name = "LivroServlet", urlPatterns = {"/editar.html", "/excluir.html"})
+@WebServlet(name = "LivroServlet", urlPatterns = {"/editar.html", "/excluir.html", "/listar.html"})
 public class LivroServlet extends HttpServlet {
 
     @PersistenceUnit(unitName = "lppo-2017-1-jpa2PU")
@@ -28,6 +33,11 @@ public class LivroServlet extends HttpServlet {
             throws ServletException, IOException {
         if (request.getServletPath().contains("/editar.html")) {
             doEditarGet(request, response);
+        } else if(request.getServletPath().contains("/excluir.html")){
+            doExcluirGet(request, response);
+             response.sendRedirect("listar.html");
+        } else if(request.getServletPath().contains("/listar.html")){
+            doListarGet(request, response);
         }
 
     }
@@ -37,7 +47,7 @@ public class LivroServlet extends HttpServlet {
             throws ServletException, IOException {
         if (request.getServletPath().contains("/editar.html")) {
             doEditarPost(request, response);
-        }
+        } 
 
     }
 
@@ -63,12 +73,35 @@ public class LivroServlet extends HttpServlet {
             livro.setAutor(request.getParameter("autor"));
             livro.setAno(Integer.parseInt(request.getParameter("ano")));
             dao.edit(livro);
+            
             response.sendRedirect("listar.html");
 
         } catch (Exception e) {
             response.sendRedirect("listar.html");
 
         }
+    }
+
+    private void doExcluirGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            LivroJpaController dao = new LivroJpaController(ut, emf);
+            Long id = Long.parseLong(request.getParameter("id"));
+
+            dao.destroy(id);
+        } catch (Exception ex) {
+            response.sendRedirect("listar.html");
+        }
+        
+        
+    }
+
+    private void doListarGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Livro> livros = new ArrayList<>();
+        LivroJpaController dao = new LivroJpaController(ut, emf);
+        livros = dao.findLivroEntities();
+        
+        request.setAttribute("livros", livros);
+        request.getRequestDispatcher("WEB-INF/listar-livros.jsp").forward(request, response);
     }
 
 }
